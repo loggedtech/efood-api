@@ -1,0 +1,46 @@
+version: "3"
+
+services:
+  app:
+    build: .
+    command: npm run dev
+    container_name: efood-app
+    networks:
+      - efood-network
+    ports:
+      - 3333:3333
+    depends_on:
+      - database
+      - cache
+    volumes:
+      - .:/usr/app
+
+  database:
+    image: postgres:alpine
+    restart: always
+    container_name: efood-database
+    networks:
+      - efood-network
+    ports:
+      - 5432:5432
+    volumes:
+      - ./.database:/var/lib/postgresql
+    environment:
+      POSTGRES_USER: efood
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: efoodb
+
+  cache:
+    image: redis:alpine
+    restart: always
+    container_name: efood-cache
+    networks:
+      - efood-network
+    ports:
+      - 6379:6379
+    volumes:
+      - ./.cache:/usr/local/etc/redis
+
+networks:
+  efood-network:
+    driver: bridge

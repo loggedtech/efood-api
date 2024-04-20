@@ -4,7 +4,9 @@
   "description": "O efood é um gestor de pedidos e entregas para restaurantes.",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx watch src/main.ts"
+    "dev": "tsx watch src/main.ts",
+    "build": "tsup src",
+    "start": "node dist/main.js"
   },
   "keywords": [],
   "author": "Carlos Alberto <clsalberto@outlook.com>",
@@ -12,6 +14,7 @@
   "devDependencies": {
     "@types/node": "^20.12.7",
     "prisma": "^5.12.1",
+    "tsup": "^8.0.2",
     "tsx": "^4.7.2",
     "typescript": "^5.4.5"
   },
