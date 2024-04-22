@@ -4,7 +4,7 @@ services:
   app:
     build: .
     command: npm run dev
-    restart: always
+    # restart: always
     container_name: efood-app
     networks:
       - efood-network
@@ -18,7 +18,7 @@ services:
 
   database:
     image: postgres:alpine
-    restart: always
+    # restart: always
     container_name: efood-database
     networks:
       - efood-network
@@ -33,7 +33,7 @@ services:
 
   cache:
     image: redis:alpine
-    restart: always
+    # restart: always
     container_name: efood-cache
     networks:
       - efood-network
