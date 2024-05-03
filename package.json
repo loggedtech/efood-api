@@ -13,14 +13,14 @@
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^20.12.7",
-    "prisma": "^5.12.1",
+    "prisma": "^5.13.0",
     "tsup": "^8.0.2",
     "tsx": "^4.7.2",
     "typescript": "^5.4.5"
   },
   "dependencies": {
     "@fastify/cors": "^9.0.1",
-    "@prisma/client": "^5.12.1",
+    "@prisma/client": "^5.13.0",
     "fastify": "^4.26.2",
     "pino": "^8.20.0",
     "pino-pretty": "^11.0.0",

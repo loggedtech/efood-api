@@ -1,6 +1,7 @@
 import fastify from "fastify";
 import { logger } from "./logger";
 import cors from "@fastify/cors";
+import { routes } from "../routes";
 
 export async function buildServer() {
   const app = fastify({
@@ -10,6 +11,8 @@ export async function buildServer() {
   app.register(cors, {
     origin: "*",
   });
+
+  app.register(routes);
 
   return app;
 }

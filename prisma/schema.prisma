@@ -11,12 +11,56 @@ model Address {
   id         String  @id @default(uuid()) @db.Uuid
   zipCode    String  @map("zip_code")
   place      String
-  number     String
-  complement String?
+  number     String  @db.VarChar(10)
+  complement String? @db.VarChar(60)
   district   String
   city       String
-  state      String
-  country    String
+  state      String  @db.Char(2)
+  country    String  @db.Char(3)
+
+  restaurants Restaurant[]
 
   @@map("addresses")
+}
+
+model Restaurant {
+  id        String   @id @default(uuid()) @db.Uuid
+  ownerId   String?  @map("owner_id") @db.VarChar(60)
+  name      String   @db.VarChar(60)
+  slogan    String?  @db.VarChar(80)
+  imageUrl  String?  @map("image_url")
+  taxId     String   @map("tax_id") @db.VarChar(18)
+  phone     String   @db.Char(11)
+  addressId String   @map("address_id") @db.Uuid
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  address Address @relation(fields: [addressId], references: [id])
+
+  users User[]
+
+  @@map("restaurants")
+}
+
+enum Role {
+  ADMINISTRATOR
+  MANAGER
+  SEPARATOR
+  PREPARER
+  MANIPULATOR
+  DELIVERYMAN
+}
+
+model User {
+  id           String  @id @default(uuid()) @db.Uuid
+  name         String  @db.VarChar(60)
+  email        String
+  password     String
+  role         Role    @default(SEPARATOR)
+  restaurantId String  @map("restaurant_id") @db.Uuid
+  active       Boolean @default(false)
+
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id])
+
+  @@map("users")
 }
