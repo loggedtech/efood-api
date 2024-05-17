@@ -9,8 +9,8 @@ datasource db {
 
 model Address {
   id         String  @id @default(uuid()) @db.Uuid
-  zipCode    String  @map("zip_code")
-  place      String
+  zip        String
+  street     String
   number     String  @db.VarChar(10)
   complement String? @db.VarChar(60)
   district   String
@@ -25,9 +25,7 @@ model Address {
 
 model Restaurant {
   id        String   @id @default(uuid()) @db.Uuid
-  ownerId   String?  @map("owner_id") @db.VarChar(60)
   name      String   @db.VarChar(60)
-  slogan    String?  @db.VarChar(80)
   imageUrl  String?  @map("image_url")
   taxId     String   @map("tax_id") @db.VarChar(18)
   phone     String   @db.Char(11)
@@ -35,9 +33,8 @@ model Restaurant {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  address Address @relation(fields: [addressId], references: [id])
-
-  users User[]
+  address Address  @relation(fields: [addressId], references: [id])
+  users   Member[]
 
   @@map("restaurants")
 }
@@ -52,15 +49,27 @@ enum Role {
 }
 
 model User {
-  id           String  @id @default(uuid()) @db.Uuid
-  name         String  @db.VarChar(60)
-  email        String
-  password     String
-  role         Role    @default(SEPARATOR)
-  restaurantId String  @map("restaurant_id") @db.Uuid
-  active       Boolean @default(false)
+  id        String   @id @default(uuid()) @db.Uuid
+  name      String   @db.VarChar(60)
+  email     String
+  password  String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  active    Boolean  @default(false)
 
-  restaurant Restaurant @relation(fields: [restaurantId], references: [id])
+  restaurants Member[]
 
   @@map("users")
+}
+
+model Member {
+  id           Int    @id @default(autoincrement())
+  restaurantId String @map("restaurant_id") @db.Uuid
+  userId       String @map("user_id") @db.Uuid
+  role         Role   @default(PREPARER)
+
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id])
+  user       User       @relation(fields: [userId], references: [id])
+
+  @@map("members")
 }
