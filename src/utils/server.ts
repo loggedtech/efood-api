@@ -17,10 +17,10 @@ export async function buildServer() {
   return app;
 }
 
-export async function gracefulShutdown({
-  app,
-}: {
+export interface AppServer {
   app: Awaited<ReturnType<typeof buildServer>>;
-}) {
+}
+
+export async function gracefulShutdown({ app }: AppServer) {
   await app.close();
 }

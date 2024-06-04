@@ -9,7 +9,7 @@
     "start": "node dist/main.js"
   },
   "keywords": [],
-  "author": "Carlos Alberto <clsalberto@outlook.com>",
+  "author": "LooggedTech <loggedtech@gmail.com>",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^20.12.7",

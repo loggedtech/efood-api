@@ -1,47 +1,28 @@
 version: "3.7"
 
 services:
-  app:
-    build: .
-    command: npm run dev
-    # restart: always
-    container_name: efood-api
-    networks:
-      - efood-network
-    ports:
-      - 3333:3333
-    depends_on:
-      - database
-      - cache
-    volumes:
-      - .:/usr/app
-
-  database:
-    image: postgres:alpine
-    # restart: always
-    container_name: efood-database
-    networks:
-      - efood-network
+  postgres:
+    image: bitnami/postgresql:latest
+    container_name: efood_postgres
     ports:
       - 5432:5432
-    volumes:
-      - ./.database:/var/lib/postgresql
     environment:
-      POSTGRES_USER: efood
-      POSTGRES_PASSWORD: secret
-      POSTGRES_DB: efoodb
+      - POSTGRES_USER=efood
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_DB=efoodb
+    volumes:
+      - pg_data:/bitnami/postgresql
 
-  cache:
-    image: redis:alpine
-    # restart: always
-    container_name: efood-cache
-    networks:
-      - efood-network
+  redis:
+    image: bitnami/redis:latest
+    container_name: efood_redis
     ports:
       - 6379:6379
+    environment:
+      - REDIS_PASSWORD=secret
     volumes:
-      - ./.cache:/usr/local/etc/redis
+      - redis_data:/bitnami/redis/data
 
-networks:
-  efood-network:
-    driver: bridge
+volumes:
+  pg_data:
+  redis_data:
