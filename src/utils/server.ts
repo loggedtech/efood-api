@@ -2,11 +2,18 @@ import fastify from "fastify";
 import { logger } from "./logger";
 import cors from "@fastify/cors";
 import { routes } from "../routes";
+import {
+  serializerCompiler,
+  validatorCompiler,
+} from "fastify-type-provider-zod";
 
 export async function buildServer() {
   const app = fastify({
     logger,
   });
+
+  app.setValidatorCompiler(validatorCompiler);
+  app.setSerializerCompiler(serializerCompiler);
 
   app.register(cors, {
     origin: "*",

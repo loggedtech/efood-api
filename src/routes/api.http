@@ -1,0 +1,28 @@
+POST https://127.0.0.1:3333/accounts HTTP/1.1
+content-type: application/json
+
+{
+  "address": {
+    "zip": "60540232",
+    "street": "Rua Nova Conquista",
+    "number": "2837",
+    "complement": "Casa A",
+    "district": "Granja Lisboa",
+    "city": "Fortaleza",
+    "state": "CE",
+    "country": "BRA"
+  },
+  "restaurant": {
+    "name": "Las Tapas",
+    "description": "Petiscos & Bebidas",
+    "phone": "85988796417",
+    "taxId": "76426521353",
+    "domain": "lastapas"
+  },
+  "user": {
+    "name": "<NAME>",
+    "email": "<EMAIL>",
+    "password": "<PASSWORD>",
+    "role": "manager"
+  }
+}
